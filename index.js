@@ -1,23 +1,15 @@
 const express = require('express');
 
-const app = express();
+const userRouter = require('./Routes/user.js');
+const booksRouter = require('./Routes/books.js');
 
-const port = 3000;
+const server = express();
 
-app.use(express.json());
+server.use(express.json());
 
-app.get('/', (req, res)=>{
-    res.status(200).json({
-        message: "hello world"
-    })
-})
+server.use('/users', userRouter);
+server.use('/books', booksRouter);
 
-app.all('/*splat', (req, res)=>{
-    res.status(500).json({
-        message: "Not buid yet"
-    })
-})
-
-app.listen(port,()=>{
-    console.log(`app is running on the port http://localhost:${port}`);
-})
+server.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
+});
